@@ -1,0 +1,177 @@
+{
+  "Skin": {
+    "index": 30,
+    "label": "Skin",
+    "defaultModel": "Skin",
+    "defaultColor": "FFCC22",
+    "models": [
+      "Skin"
+    ],
+    "colors": [
+      "FFCC22",
+      "FBD2C7",
+      "F2AD9B",
+      "E58F7B",
+      "E4A070",
+      "B16A5B",
+      "92594B",
+      "623D36",
+      "C9E6DC"
+    ]
+  },
+  "Hair": {
+    "index": 70,
+    "label": "Hair",
+    "defaultModel": "Bald",
+    "defaultColor": "362C47",
+    "models": [
+      "Bald",
+      "Balding",
+      "Beanie",
+      "Bigcurls",
+      "Bobbangs",
+      "Bobcut",
+      "Buncurls",
+      "Bunundercut",
+      "Buzz",
+      "Buzzcut",
+      "Curlybun",
+      "Curlyhightop",
+      "Fade",
+      "Hat",
+      "Long",
+      "Mohawk",
+      "Pigtails",
+      "Shortcombover",
+      "Shortcomboverchops",
+      "Sidebuzz",
+      "Straightbun"
+    ],
+    "colors": [
+      "362C47",
+      "675E97",
+      "5AC4D4",
+      "DEE1F5",
+      "6C4545",
+      "F29C65",
+      "E16381",
+      "E15C66"
+    ]
+  },
+  "FacialHair": {
+    "index": 90,
+    "label": "Facial Hair",
+    "defaultModel": "Goatee",
+    "defaultColor": "362C47",
+    "models": [
+      "Mustache-black",
+      "Goatee",
+      "Shadow",
+      "Soulpatch",
+      "Walrus"
+    ],
+    "colors": [
+      "362C47",
+      "675E97",
+      "5AC4D4",
+      "DEE1F5",
+      "6c4545",
+      "F29C65",
+      "E16381",
+      "E15C66"
+    ]
+  },
+  "Body": {
+    "index": 75,
+    "label": "Body",
+    "defaultModel": "Checkered",
+    "defaultColor": "456DFF",
+    "models": [
+      "Checkered",
+      "Round",
+      "Small",
+      "Square"
+    ],
+    "colors": [
+      "456DFF",
+      "5A45FF",
+      "6DBB58",
+      "F55D81",
+      "7555CA",
+      "E24553",
+      "54D7C7",
+      "F3B63A"
+    ]
+  },
+  "Eyes": {
+    "index": 110,
+    "label": "Eyes",
+    "defaultModel": "Glasses",
+    "defaultColor": "000000",
+    "models": [
+      "Glasses",
+      "Happy",
+      "Open",
+      "Sleepy",
+      "Sunglasses",
+      "Wink"
+    ]
+  },
+  "Mouth": {
+    "index": 80,
+    "label": "Mouth",
+    "defaultModel": "Bigsmile",
+    "defaultColor": "000000",
+    "models": [
+      "Bigsmile",
+      "Frown",
+      "Lips",
+      "Pacifier",
+      "Smile",
+      "Smirk",
+      "Surprise"
+    ]
+  },
+  "Nose": {
+    "index": 100,
+    "label": "Nose",
+    "defaultModel": "Mediumround",
+    "defaultColor": "000000",
+    "models": [
+      "Mediumround",
+      "Smallround",
+      "Wrinkles"
+    ]
+  },
+  "Background": {
+    "index": 20,
+    "label": "Background",
+    "defaultColor": "000000",
+    "defaultModel": "blue",
+    "models": [
+      "blue",
+      "dark",
+      "green",
+      "grey",
+      "pink",
+      "purple",
+      "red",
+      "teal",
+      "white",
+      "yellow"
+    ]
+  },
+  "Brand": {
+    "index": 120,
+    "label": "Brand",
+    "defaultColor": "000000",
+    "defaultModel": "elrond-black",
+    "models": [
+      "elrond-black",
+      "elrond-white",
+      "eclair",
+      "maiatar"
+    ]
+  }
+}
+

@@ -1,0 +1,12 @@
+<svg height="64" width="64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 64 64">
+    <defs>
+        <mask class="fill-to-change" id="a" fill="#fff">
+            <use fill="none"/>
+        </mask>
+    </defs>
+    <g fill="none" transform="translate(2 2)">
+        <use fill="#362c47"/>
+        <path fill="#fff" d="M13 5h34v23H13z" mask="url(#a)" opacity=".259"/>
+    </g>
+</svg>
