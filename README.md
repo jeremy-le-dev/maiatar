@@ -1,5 +1,7 @@
 # elrond-nft-avatars
 
+# https://leofinance.io/@tcsenpai/issue-an-nft-on-elrond-from-a-to-z-egld-nft
+
 ## Project setup
 ```
 yarn install

@@ -1,34 +1,34 @@
 <template>
   <div class="AvatarGenerator"  :class="{'filter blur-sm': !address}">
     <div>
-      <div class="box-pre-export mx-auto border-1 bg-gray-100 rounded-full overflow-hidden relative"
-           style="width: 1600px; height: 1600px; zoom: 0.1;">
+      <div class="box-pre-export mx-auto border-1 bg-gray-100 rounded-full overflow-hidden relative" style="width: 1600px; height: 1600px; zoom: 10%; -ms-zoom: 10%; -webkit-zoom: 10%; -moz-transform:  scale(0.1); -moz-transform-Origin: 0 0;">
         <div class="box-export relative w-full h-full">
 
           <!-- Avatar -->
-          <div class="absolute left-0 top-0 w-full h-full" v-for="(theme, id) in avatarParams" v-bind:key="id"
+          <div class="absolute left-0 top-0" style="height: 1600px; width: 1600px;" v-for="(theme, id) in avatarParams" v-bind:key="id"
                :style="{ 'z-index': avatarParams[id].index }">
             <SimpleSVG :src="modelSvgUrl(id, avatarParams[id].selectedModel)"
                        :fill="colorToHexa(avatarParams[id].selectedColor)" fill-class-name="fill-to-change"
-                       style="width: 100%; height: 100%;" width="1600" height="1600"></SimpleSVG>
+                       style="width: 1600px; height: 1600px;" width="1600" height="1600"></SimpleSVG>
           </div>
 
         </div>
+        <canvas id="game" width="128" height="128"></canvas>
       </div>
       <div class="text-center py-5">
-        <button @click="onRandomize"
-                class="px-3 py-2 text-sm rounded font-semibold">
+        <button @click="onRandomize" class="px-3 py-2 text-sm rounded font-semibold">
           Randomize&nbsp;<i class="fas fa-random align-middle"></i>
         </button>
         <br>
         <br>
-        <button v-if="address" @click="exportLoading = true; onPaidNft();"
+        <button v-if="address" @click="onExport();"
                 class="bg-blue-600 px-3 py-2 text-lg rounded font-semibold text-white dark:bg-blue-300">
           <span v-show="!exportLoading">
-            Get this NFT for 0.1 $EGLD&nbsp;<i class="fas fa-long-arrow-alt-down align-middle"></i>
+<!--            Get this NFT for 0.1 $EGLD&nbsp;<i class="fas fa-long-arrow-alt-down align-middle"></i>-->
+            Download&nbsp;&nbsp;<i class="fas fa-long-arrow-alt-down align-middle"></i>
           </span>
           <span v-show="exportLoading">
-            <i class="fas fa-spinner fa-spin align-middle"></i>
+            Waiting&nbsp;&nbsp;<i class="fas fa-spinner fa-spin align-middle"></i>
           </span>
         </button>
       </div>
@@ -71,10 +71,11 @@
 <script>
 import {SimpleSVG} from 'vue-simple-svg';
 import html2canvas from 'html2canvas';
+// import Pixelit from '../assets/libs/pixelit.js';
 import AvatarParams from '../assets/avatars/config.json';
-import PrivateKey from '../assets/private/key.json';
+// import PrivateKey from '../assets/private/key.json';
 import Assets from '../assets/avatars/Assets';
-import {ProxyProvider, NetworkConfig, Address, Account, Balance, ContractFunction, GasLimit, SmartContract, TokenIdentifierValue, UserSecretKey, UserSigner} from "@elrondnetwork/erdjs";
+/*import {ProxyProvider, NetworkConfig, Address, Account, Balance, ContractFunction, GasLimit, SmartContract, TokenIdentifierValue, UserSecretKey, UserSigner} from "@elrondnetwork/erdjs";*/
 
 export default {
   name: 'AvatarGenerator',
@@ -102,7 +103,7 @@ export default {
     this.onRandomize();
   },
   methods: {
-    async onPaidNft() {
+    /*async onPaidNft() {
       // Signer
       const signer = new UserSigner(UserSecretKey.fromString(PrivateKey.key));
 
@@ -146,7 +147,7 @@ export default {
       console.error('TX1 DATA', tx1.getData());
 
       // Create Role Assign Transaction
-      /*let contract2 = new SmartContract({ address: new Address(myAddress) });
+      /!*let contract2 = new SmartContract({ address: new Address(myAddress) });
       let tx2 = contract2.call({
         func: new ContractFunction("setSpecialRole"),
         gasLimit: new GasLimit(60000000),
@@ -161,21 +162,24 @@ export default {
 
       tx2.setNonce(alice.nonce);
       // await signer.sign(tx2);
-      await tx2.send(provider);*/
-    },
-    async export() {
-      console.error('onExport');
-      const node = document.getElementsByClassName('box-export')[0]
-      window.scroll(0, 0);
-      const canvas = await html2canvas(node);
-      const dataUrl = canvas.toDataURL();
-      const link = document.createElement('a')
-      link.download = 'avatar.png'
-      link.href = dataUrl
-      document.body.appendChild(link)
-      link.click()
-      link.remove()
-      this.exportLoading = false;
+      await tx2.send(provider);*!/
+    },*/
+    async onExport() {
+      this.exportLoading = true;
+      setTimeout(async () => {
+        console.error('onExport');
+        const node = document.getElementsByClassName('box-export')[0]
+        window.scroll(0, 0);
+        const canvas = await html2canvas(node);
+        const dataUrl = canvas.toDataURL();
+        const link = document.createElement('a')
+        link.download = 'avatar.png'
+        link.href = dataUrl
+        document.body.appendChild(link)
+        link.click()
+        link.remove()
+        this.exportLoading = false;
+      }, 500);
     },
     onRandomize() {
       for (let themeId in this.avatarParams) {
@@ -228,8 +232,8 @@ export default {
 </script>
 
 <style>
-.box-pre-export:before {
-  content: '@jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev @jeremy_le_dev';
+/*.box-pre-export:before {
+  content: '@maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond @maiatar_elrond';
   position: absolute;
   top: 0;
   left: 0;
@@ -243,5 +247,13 @@ export default {
   -webkit-transform: rotate(-45deg);
   -moz-transform: rotate(-45deg);
   opacity: 0.1;
+}*/
+.to-pixelize {
+  width: 512px;
+  height: 512px;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 </style>

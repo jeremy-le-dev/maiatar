@@ -21,6 +21,7 @@
     <h1 class="text-4xl font-bold py-10 mx-auto text-center">
       <img v-show="theme === 'light'" src="./assets/elrond-avatar-dark.svg" width="50" alt="Elrond logo" class="inline-block m-3 align-middle"><img v-show="theme === 'dark'" src="./assets/elrond-light.svg" width="50" alt="Elrond logo" class="inline-block m-3">
       <span class="align-middle">Maiatar</span>
+      <span class="text-xs text-blue-600 pl-2">Bêta</span>
     </h1>
 
     <!-- Avatar Generator & Payment -->
@@ -35,7 +36,7 @@
 
     <!-- Footer -->
     <div class="w-full text-center text-sm mt-5">
-      Made with <i class="fas fa-heart text-red-600"></i> by <a href="https://twitter.com/jeremy_le_dev" target="_blank" class="font-semibold hover:text-blue-600 dark:hover:text-blue-300">@jeremy_le_dev</a>
+      Made with <i class="fas fa-heart text-red-600"></i> by <a href="https://twitter.com/maiatar_elrond" target="_blank" class="font-semibold hover:text-blue-600 dark:hover:text-blue-300">@maiatar_elrond</a>
     </div>
   </div>
 </template>
