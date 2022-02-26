@@ -1,7 +1,8 @@
 <template>
   <div class="AvatarGenerator"  :class="{'filter blur-sm': !address}">
-    <div>
-      <div class="box-pre-export mx-auto border-1 bg-gray-100 rounded-full overflow-hidden relative" style="width: 1600px; height: 1600px; zoom: 10%; -ms-zoom: 10%; -webkit-zoom: 10%; -moz-transform:  scale(0.1); -moz-transform-Origin: 0 0;">
+    <span>
+      <div style="height: 160px; width: 160px; overflow: hidden; margin: auto;">
+        <div class="box-pre-export mx-auto border-1 bg-gray-100 rounded-full overflow-hidden relative" style="width: 1600px; height: 1600px; transform: scale(0.1); transform-origin: 0 0; -webkit-transform: scale(0.1);  -webkit-transform-origin: 0 0;  -moz-transform: scale(0.1); -moz-transform-origin: 0 0;">
         <div class="box-export relative w-full h-full">
 
           <!-- Avatar -->
@@ -14,6 +15,7 @@
 
         </div>
         <canvas id="game" width="128" height="128"></canvas>
+      </div>
       </div>
       <div class="text-center py-5">
         <button @click="onRandomize" class="px-3 py-2 text-sm rounded font-semibold">
@@ -33,7 +35,7 @@
         </button>
       </div>
       <div class="flex flex-wrap justify-center justify-around">
-        <div class="w-1/4 text-gray-500 p-4" v-for="(theme, id) in avatarParams" v-bind:key="id">
+        <div class="w-1/2 md:w-1/4 text-gray-500 p-4" v-for="(theme, id) in avatarParams" v-bind:key="id">
           <!-- Label -->
           <div class="uppercase text-sm tracking-wider py-4">{{ avatarParams[id].label }}</div>
 
@@ -64,7 +66,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </span>
   </div>
 </template>
 
