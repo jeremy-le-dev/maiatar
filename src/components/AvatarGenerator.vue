@@ -1,21 +1,39 @@
 <template>
   <div class="AvatarGenerator"  :class="{'filter blur-sm': !address}">
+    <p><span class="font-semibold">{{this.hashs.length}}</span> maiatars already created<!--, don't wait!--></p>
+    <br>
+<!--    <button type="button" @click="exportCsvOfPossibilities" class="inline-flex items-center px-4 py-2 mb-3 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-500 hover:bg-indigo-400 transition ease-in-out duration-150" :class="{'cursor-not-allowed': isLoading}" :disabled="isLoading">
+      <svg v-show="isLoading" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      <span v-show="isLoading">Processing...</span>
+      <span v-show="!isLoading">Set Possibilities</span>
+    </button>-->
     <span>
       <div style="height: 160px; width: 160px; overflow: hidden; margin: auto;">
         <div class="box-pre-export mx-auto border-1 bg-gray-100 rounded-full overflow-hidden relative" style="width: 1600px; height: 1600px; transform: scale(0.1); transform-origin: 0 0; -webkit-transform: scale(0.1);  -webkit-transform-origin: 0 0;  -moz-transform: scale(0.1); -moz-transform-origin: 0 0;">
-        <div class="box-export relative w-full h-full">
-
-          <!-- Avatar -->
-          <div class="absolute left-0 top-0" style="height: 1600px; width: 1600px;" v-for="(theme, id) in avatarParams" v-bind:key="id"
-               :style="{ 'z-index': avatarParams[id].index }">
-            <SimpleSVG :src="modelSvgUrl(id, avatarParams[id].selectedModel)"
-                       :fill="colorToHexa(avatarParams[id].selectedColor)" fill-class-name="fill-to-change"
-                       style="width: 1600px; height: 1600px;" width="1600" height="1600"></SimpleSVG>
+          <div class="relative w-full h-full">
+            <!-- Avatar -->
+            <div class="absolute left-0 top-0" style="height: 1600px; width: 1600px;" v-for="(theme, id) in avatarParams" v-bind:key="id"
+                 :style="{ 'z-index': avatarParams[id].index }">
+              <SimpleSVG :src="modelSvgUrl(id, avatarParams[id].selectedModel)"
+                         :fill="colorToHexa(avatarParams[id].selectedColor)" fill-class-name="fill-to-change"
+                         style="width: 1600px; height: 1600px;" width="1600" height="1600"></SimpleSVG>
+            </div>
           </div>
-
         </div>
-        <canvas id="game" width="128" height="128"></canvas>
-      </div>
+        <div class="box-pre-export mx-auto border-1 bg-gray-100 rounded-full overflow-hidden relative" style="width: 1600px; height: 1600px; position: fixed; left: -16000px; top: -16000px;">
+          <div class="box-export relative w-full h-full">
+            <!-- Avatar -->
+            <div class="absolute left-0 top-0" style="height: 1600px; width: 1600px;" v-for="(theme, id) in avatarParams" v-bind:key="id"
+                 :style="{ 'z-index': avatarParams[id].index }">
+              <SimpleSVG :src="modelSvgUrl(id, avatarParams[id].selectedModel)"
+                         :fill="colorToHexa(avatarParams[id].selectedColor)" fill-class-name="fill-to-change"
+                         style="width: 1600px; height: 1600px;" width="1600" height="1600"></SimpleSVG>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="text-center py-5">
         <button @click="onRandomize" class="px-3 py-2 text-sm rounded font-semibold">
@@ -23,14 +41,16 @@
         </button>
         <br>
         <br>
-        <button v-if="address" @click="onExport();"
-                class="bg-blue-600 px-3 py-2 text-lg rounded font-semibold text-white dark:bg-blue-300">
+        <span v-show="isAlreadyExported" class="text-red-500">This combination has already been created.</span>
+        <br v-show="isAlreadyExported">
+        <br v-show="isAlreadyExported">
+        <button v-if="address" @click="onExport();" :disabled="isAlreadyExported" :class="{'opacity-75 cursor-not-allowed': isAlreadyExported}" class="bg-blue-600 px-3 py-2 text-lg rounded font-semibold text-white dark:bg-blue-300">
           <span v-show="!exportLoading">
 <!--            Get this NFT for 0.1 $EGLD&nbsp;<i class="fas fa-long-arrow-alt-down align-middle"></i>-->
             Download&nbsp;&nbsp;<i class="fas fa-long-arrow-alt-down align-middle"></i>
           </span>
           <span v-show="exportLoading">
-            Waiting&nbsp;&nbsp;<i class="fas fa-spinner fa-spin align-middle"></i>
+            Waiting&nbsp;&nbsp;<svg class="animate-spin ml-1 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
           </span>
         </button>
       </div>
@@ -71,13 +91,15 @@
 </template>
 
 <script>
+// import {ProxyProvider, NetworkConfig, Address, Account, Balance, ContractFunction, GasLimit, SmartContract, TokenIdentifierValue, UserSecretKey, UserSigner} from "@elrondnetwork/erdjs";
+// import PrivateKey from '../assets/private/key.json';
 import {SimpleSVG} from 'vue-simple-svg';
 import html2canvas from 'html2canvas';
-// import Pixelit from '../assets/libs/pixelit.js';
 import AvatarParams from '../assets/avatars/config.json';
-// import PrivateKey from '../assets/private/key.json';
 import Assets from '../assets/avatars/Assets';
-/*import {ProxyProvider, NetworkConfig, Address, Account, Balance, ContractFunction, GasLimit, SmartContract, TokenIdentifierValue, UserSecretKey, UserSigner} from "@elrondnetwork/erdjs";*/
+import JSum from 'jsum';
+import { db } from '@/main';
+import { collection, getDocs, query, doc, where, setDoc } from 'firebase/firestore';
 
 export default {
   name: 'AvatarGenerator',
@@ -95,6 +117,11 @@ export default {
       avatarParams: AvatarParams,
       assets: Assets,
       exportLoading: false,
+      hashs: [],
+      avatarsCollection: collection(db, 'avatars'),
+      currentCollection: doc(db, `collections/H5OxTkh3KXpUwtf36qjo`),
+      isLoading: false,
+      isAlreadyExported: false,
     }
   },
   created() {
@@ -103,6 +130,7 @@ export default {
       this.avatarParams[themeId].selectedColor = this.avatarParams[themeId].defaultColor;
     }
     this.onRandomize();
+    this.updateExistingPossibilities();
   },
   methods: {
     /*async onPaidNft() {
@@ -167,21 +195,32 @@ export default {
       await tx2.send(provider);*!/
     },*/
     async onExport() {
-      this.exportLoading = true;
-      setTimeout(async () => {
-        console.error('onExport');
-        const node = document.getElementsByClassName('box-export')[0]
-        window.scroll(0, 0);
-        const canvas = await html2canvas(node);
-        const dataUrl = canvas.toDataURL();
-        const link = document.createElement('a')
-        link.download = 'avatar.png'
-        link.href = dataUrl
-        document.body.appendChild(link)
-        link.click()
-        link.remove()
-        this.exportLoading = false;
-      }, 500);
+      if (this.isAlreadyExported) {
+        return;
+      }
+      const checkSum = this.checkSum(this.avatarParams);
+      await this.updateExistingPossibilities();
+      if (!this.hashs.map(hash => hash.hash).includes(checkSum)) {
+        this.exportLoading = true;
+        setTimeout(async () => {
+          // console.error('onExport');
+          const node = document.getElementsByClassName('box-export')[0]
+          window.scroll(0, 0);
+          const canvas = await html2canvas(node);
+          const dataUrl = canvas.toDataURL();
+          const link1 = document.createElement('a')
+          link1.download = 'maiatar.png'
+          link1.href = dataUrl
+          document.body.appendChild(link1)
+          link1.click()
+          link1.remove()
+          await this.setNewPossibility(this.getAvatarConfig(this.avatarParams), checkSum)
+          this.checkIfAlreadExported(checkSum);
+          this.exportLoading = false;
+        }, 500);
+      } else {
+        this.isAlreadyExported = true;
+      }
     },
     onRandomize() {
       for (let themeId in this.avatarParams) {
@@ -216,9 +255,13 @@ export default {
     },
     selectModel(themeId, model) {
       this.avatarParams[themeId] = Object.assign({}, this.avatarParams[themeId], {selectedModel: model})
+      const checkSum = this.checkSum(this.avatarParams);
+      this.checkIfAlreadExported(checkSum);
     },
     selectColor(themeId, color) {
       this.avatarParams[themeId] = Object.assign({}, this.avatarParams[themeId], {selectedColor: color})
+      const checkSum = this.checkSum(this.avatarParams);
+      this.checkIfAlreadExported(checkSum);
     },
     modelSvgUrl(id, modelId) {
       if (id && modelId && this.assets && this.assets[id.toLowerCase()] && this.assets[id.toLowerCase()][modelId.toLowerCase()]) {
@@ -229,6 +272,73 @@ export default {
     colorToHexa(color) {
       return `#${color}`;
     },
+    getAvatarConfig(avatarParams) {
+      const avatarConfig = {};
+      for (let themeId in avatarParams) {
+        if (avatarParams[themeId]) {
+          let value = '';
+          if (avatarParams[themeId].models) {
+            value += avatarParams[themeId].selectedModel;
+          } else {
+            value += 'null';
+          }
+          value += '/';
+          if (avatarParams[themeId].colors) {
+            value += avatarParams[themeId].selectedColor;
+          } else {
+            value += 'null';
+          }
+          avatarConfig[themeId] = value
+        }
+      }
+      return avatarConfig;
+    },
+    checkSum(avatarParams) {
+      const avatarConfig = this.getAvatarConfig(avatarParams);
+      return JSum.digest(avatarConfig, 'SHA256', 'hex');
+    },
+    async exportCsvOfPossibilities() {
+      this.isLoading = true;
+      for (let i = 0; i < 10000; i += 1) {
+        this.onRandomize();
+        const checkSum = this.checkSum(this.avatarParams);
+        if (!this.hashs.map(hash => hash.hash).includes(checkSum)) {
+          await this.setNewPossibility(this.getAvatarConfig(this.avatarParams), checkSum)
+        }
+      }
+      // console.error('this.hashs', this.hashs);
+      this.isLoading = false;
+    },
+    async updateExistingPossibilities() {
+      const q = query(
+          this.avatarsCollection,
+          where(
+              'collection',
+              '==',
+              this.currentCollection
+          )
+      );
+      await getDocs(q).then((querySnapshot) => {
+        this.hashs = querySnapshot.docs.map(doc => doc.data());
+        // console.error('this.hashs', this.hashs);
+      });
+    },
+    async setNewPossibility(config, hash) {
+      await setDoc(doc(this.avatarsCollection), {
+        collection: this.currentCollection,
+        config: config,
+        hash: hash,
+        id: this.hashs.length,
+      });
+      await this.updateExistingPossibilities();
+    },
+    checkIfAlreadExported(checkSum) {
+      if (this.hashs.map(hash => hash.hash).includes(checkSum)) {
+        this.isAlreadyExported = true;
+      } else {
+        this.isAlreadyExported = false;
+      }
+    }
   }
 }
 </script>
