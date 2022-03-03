@@ -1,5 +1,5 @@
 <template>
-  <div class="AvatarGenerator"  :class="{'filter blur-sm': !address}">
+  <div class="AvatarGenerator" :class="{'filter blur-sm': !address}">
     <p><span class="font-semibold">{{this.hashs.length}}</span> maiatars already created<!--, don't wait!--></p>
     <br>
 <!--    <button type="button" @click="exportCsvOfPossibilities" class="inline-flex items-center px-4 py-2 mb-3 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-500 hover:bg-indigo-400 transition ease-in-out duration-150" :class="{'cursor-not-allowed': isLoading}" :disabled="isLoading">

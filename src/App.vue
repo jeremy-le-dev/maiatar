@@ -5,7 +5,8 @@
       <i v-show="theme === 'dark'" class="fas fa-sun fa-2x"></i>
     </div>
 
-    <div v-if="address" class="overflow-hidden rounded-full fixed top-2 left-2 bg-white p-1 pl-2 text-sm dark:bg-gray-800 dark:hover:text-blue-300 shadow-sm">
+    <!-- TODO address -->
+<!--    <div v-if="address" class="overflow-hidden rounded-full fixed top-2 left-2 bg-white p-1 pl-2 text-sm dark:bg-gray-800 dark:hover:text-blue-300 shadow-sm">
       <span class="text-gray-600" :title="address">{{ addressTruncated }}</span>
       &nbsp;
       <button class="text-gray-400 hover:text-blue-600 dark:hover:text-blue-300">
@@ -15,7 +16,7 @@
       <button class="px-2 py-1 bg-blue-600 rounded-full text-white dark:bg-blue-300" @click="logout">
         <i class="fas fa-sign-out-alt"></i>
       </button>
-    </div>
+    </div>-->
 
     <!-- Title -->
     <h1 class="text-4xl font-bold py-10 mx-auto text-center">
@@ -27,11 +28,11 @@
     <!-- Avatar Generator & Payment -->
     <div class="text-center rounded-lg p-5 bg-white shadow-md border-t-4 border-blue-600 dark:bg-gray-800 dark:border-blue-300 relative">
       <AvatarGenerator :address="address"/>
-      <div v-if="!address" class="bg-gray-800 bg-opacity-25 w-full h-full absolute top-0 left-0" style="z-index: 999;">
+<!--      <div v-if="!address" class="bg-gray-800 bg-opacity-25 w-full h-full absolute top-0 left-0" style="z-index: 999;">
         <button @click="login" class="mt-32 bg-blue-600 px-3 py-2 text-2xl rounded font-semibold text-white dark:bg-blue-300">
           Login&nbsp;<i class="fas fa-bolt align-middle"></i>
         </button>
-      </div>
+      </div>-->
     </div>
 
     <!-- Footer -->
@@ -52,7 +53,8 @@ export default {
   data() {
     return {
       theme: 'light',
-      address: this.$route && this.$route.query && this.$route.query.address || '',
+      // address: this.$route && this.$route.query && this.$route.query.address || '',
+      address: true, // TODO address
     };
   },
   mounted() {
@@ -70,8 +72,8 @@ export default {
   },
   methods: {
     fetchData() {
-      console.error('this.$route b', this.$route);
-      this.address = this.$route && this.$route.query && this.$route.query.address || '';
+      // TODO address
+      // this.address = this.$route && this.$route.query && this.$route.query.address || '';
     },
 
     /**
