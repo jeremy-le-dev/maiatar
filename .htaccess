@@ -10,4 +10,7 @@ RewriteCond %{HTTPS} !=on
 # Redirect to https version
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+# Redirect to www.
+RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
+
 # Put the rest of your rewrite rules here
